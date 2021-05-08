@@ -1,0 +1,7 @@
+<div style="text-align: center; height: 100%;">
+
+    <button mat-raised-button
+        *ngFor="let lightButton of lightButtons"
+        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state}" (click)="sendMessage(lightButton.id,lightButton.state)">{{lightButton.name}}</button>
+        
+</div>
