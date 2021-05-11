@@ -50,6 +50,7 @@ export class LightsComponent implements OnInit {
         btn.state = (msg.payload.toString()=="1")
 
     });
+    this.onResize();
   }
 
   @HostListener('window:resize', ['$event'])
