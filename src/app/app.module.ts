@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LightsComponent } from './lights/lights.component';
 
 import { MatButtonModule } from '@angular/material/button';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { IMqttServiceOptions, MqttModule } from "ngx-mqtt";
 import { environment as env } from '../environments/environment';
@@ -31,6 +32,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatGridListModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
 
   ],

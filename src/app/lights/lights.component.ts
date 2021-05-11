@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IMqttMessage, MqttService } from "ngx-mqtt";
 
@@ -19,6 +19,8 @@ export class LightsComponent implements OnInit {
   subscription: Subscription = new Subscription;
   lightSwitchTopic: string = "/LightSwitch/"
 
+  cols = 1;
+
   constructor(
     private mqttService: MqttService,
   ) {  }
@@ -35,21 +37,38 @@ export class LightsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.mqttService.observe(this.lightSwitchTopic + "#").subscribe(msg => {
-      console.log(msg);
+      //console.log(msg);
 
       if (isNaN(parseInt(msg.topic.slice(-1)))) return;
 
       let id = msg.topic.replace(this.lightSwitchTopic, "");
-      console.log(id);
-      console.log(msg.payload.toString());
+      //console.log(id);
+      //console.log(msg.payload.toString());
       let btn = this.lightButtons.find(btn=>btn.id==id);
-      console.log(btn)
+      //console.log(btn)
       if (btn)
         btn.state = (msg.payload.toString()=="1")
 
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+
+  onResize() {
+
+    console.log("Width: %d", window.innerWidth);
+    console.log("Height: %d", window.innerHeight);
+    console.log("DIV: %d", window.innerWidth/window.innerHeight);
+    
+    if((window.innerWidth/window.innerHeight)>1){
+      this.cols = 2;
+    }else{
+      this.cols = 1;
+    }
+    
+    console.log("this.cols",this.cols);
+  }
+  
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -58,8 +77,8 @@ export class LightsComponent implements OnInit {
 
   sendMessage(id: string, state: boolean) {
     let msg: string = state ? "0" : "1"
-    console.log(id + " " + state + " " + msg);
-    this.mqttService.publish(this.lightSwitchTopic + id, msg, { retain: true, }).subscribe(msg=>console.log(msg));
+    //console.log(id + " " + state + " " + msg);
+    this.mqttService.publish(this.lightSwitchTopic + id, msg, { retain: true, }).subscribe(/* msg=>console.log(msg) */);
   }
 
 }

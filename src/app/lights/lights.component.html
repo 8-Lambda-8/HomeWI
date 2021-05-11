@@ -1,7 +1,8 @@
-<div style="text-align: center; height: 100%;">
-
-    <button mat-raised-button
-        *ngFor="let lightButton of lightButtons"
-        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state}" (click)="sendMessage(lightButton.id,lightButton.state)">{{lightButton.name}}</button>
-        
+<div #gridView>
+    <mat-grid-list cols="{{cols}}" rowHeight="4:1">
+        <mat-grid-tile *ngFor="let lightButton of lightButtons">
+            <button mat-raised-button [ngClass]="{'on': lightButton.state, 'off': !lightButton.state}"
+                (click)="sendMessage(lightButton.id,lightButton.state)">{{lightButton.name}}</button>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>
