@@ -7,10 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LightsComponent } from './lights/lights.component';
 
 import { MatButtonModule } from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { IMqttServiceOptions, MqttModule } from "ngx-mqtt";
 import { environment as env } from '../environments/environment';
+import { ThermostatComponent } from './thermostat/thermostat.component';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: true,
@@ -25,7 +27,8 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 @NgModule({
   declarations: [
     AppComponent,
-    LightsComponent
+    LightsComponent,
+    ThermostatComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BrowserAnimationsModule,
     MatButtonModule,
     MatGridListModule,
+    MatTabsModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
 
   ],
