@@ -62,10 +62,13 @@ export class ThermostatComponent implements OnInit {
     }
   }
 
-  sendMessage(id: string, state: boolean) {
-    //let msg: string = state ? "0" : "1"
-    //console.log(id + " " + state + " " + msg);
-    //this.mqttService.publish(this.lightSwitchTopic + id, msg, { retain: true, }).subscribe(/* msg=>console.log(msg) */);
+  updateTargetTemp(){
+    console.log(this.targetTemp);
+    this.mqttService.publish(this.tempTopic+"targetTemp",""+this.targetTemp,{ retain: true, }).subscribe();
+  }
+  updateH(){
+    console.log(this.H);
+    this.mqttService.publish(this.tempTopic+"targetTemp",""+this.targetTemp,{ retain: true, }).subscribe();
   }
 
 }

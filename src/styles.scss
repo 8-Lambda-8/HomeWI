@@ -20,6 +20,12 @@ html, body, app-root, mat-tab-group { height: 100%; }
 .mat-tab-body-wrapper { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.fullFlex { 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 
 $angular-dark-theme: mat-dark-theme(
   (

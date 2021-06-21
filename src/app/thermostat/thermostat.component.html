@@ -1,17 +1,22 @@
-<mat-slider thumbLabel tickInterval=".1" step=".1" 
-    aria-label="units" #targetTempSlider min="15" max="30" [(ngModel)]="targetTemp"></mat-slider>
+<div style="height: 30%; display: flex;">
+    <div style="width:50%; padding: 2%;" class="fullFlex">
+        <mat-form-field width="50%">
+            <mat-label>Soll Temperatur</mat-label>
+            <input matInput type="number" min="15" max="30" step=".1" placeholder="Soll Temperatur" #targetTempInput
+                [(ngModel)]="targetTemp" (ngModelChange)="updateTargetTemp()">
+        </mat-form-field>
 
-<mat-form-field class="example-full-width">
-    <mat-label>Soll Temperatur</mat-label>
-    <input matInput type="number" min="15" max="30" placeholder="Soll Temperatur" #targetTempInput
-        [(ngModel)]="targetTemp">
-</mat-form-field>
+        <mat-slider thumbLabel tickInterval=".1" step=".1" aria-label="units" #targetTempSlider min="15" max="30"
+            [(ngModel)]="targetTemp" (ngModelChange)="updateTargetTemp()"></mat-slider>
 
-<mat-form-field class="example-full-width">
-    <mat-label>Hysterese</mat-label>
-    <input matInput type="number" min="0" max="2" placeholder="Hysterese" #HInput [(ngModel)]="H">
-</mat-form-field>
+        <mat-form-field>
+            <mat-label>Hysterese</mat-label>
+            <input matInput type="number" min="0" max="2" placeholder="Hysterese" #HInput [(ngModel)]="H" (ngModelChange)="updateH()">
+        </mat-form-field>
+    </div>
 
-<iframe
-    src="https://homewi.ddns.net/grafana/d-solo/Zszovekgk/temperature?orgId=1&panelId=5&kiosk&refresh=5s&from=now-6h&to=now"
-    width="100%" height="80%" frameborder="0"></iframe>
+</div>
+
+
+<iframe src="https://homewi.lambda8.at/grafana/d-solo/DhONJMiRz/x?orgId=1&panelId=5&kiosk&refresh=5s&from=now-6h&to=now"
+    width="100%" height="70%" frameborder="0"></iframe>
