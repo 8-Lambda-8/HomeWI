@@ -27,6 +27,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: space-evenly;
 }
 
+.fullWidth {
+  width: 100%;
+}
+.fullHeight {
+  height: 100%;
+}
+
 $angular-dark-theme: mat-dark-theme(
   (
     color: (

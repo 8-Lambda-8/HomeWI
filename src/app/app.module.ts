@@ -9,10 +9,10 @@ import { LightsComponent } from './lights/lights.component';
 
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -42,10 +42,10 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BrowserAnimationsModule,
     FormsModule,
     MatButtonModule,
-    MatGridListModule,
     MatTabsModule,
     MatSliderModule,
     MatInputModule,
+    FlexLayoutModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
 
   ],

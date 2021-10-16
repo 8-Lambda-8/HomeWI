@@ -1,8 +1,9 @@
 button{
-    width: 95%;
-    height: 95%;
-    font-size: 8vw;
-    margin: 15px;
+    width: 90%;
+    min-height: 150px;
+    height: fit-content;
+    margin: 8px;
+    text-align: center;
 }
 
 .on{
@@ -11,4 +12,11 @@ button{
 
 .off{
     background-color: red;
+}
+
+.btnGrid {
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
