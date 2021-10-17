@@ -18,10 +18,20 @@ export class ThermostatComponent implements OnInit {
   H: number = 0;
   heaterState: boolean = false;
 
+  floatValue: (value: number) => string;
+  percentageValue: (value: number) => string;
 
   constructor(
     private mqttService: MqttService,
-  ) { }
+    public dialog: MatDialog,
+  ) {
+    this.floatValue = function (value: number): string {
+      return `${value.toFixed(1)}`;
+    };
+    this.percentageValue = function (value: number): string {
+      return `${value.toFixed(1)} %`;
+    };
+  }
 
   ngOnInit(): void {
     this.subscription = this.mqttService.observe(this.tempTopic + "#").subscribe(msg => {

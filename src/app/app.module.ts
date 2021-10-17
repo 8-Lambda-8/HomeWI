@@ -13,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { GaugeModule } from 'angular-gauge';
 
 
 
@@ -47,7 +48,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatInputModule,
     FlexLayoutModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-
+    GaugeModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

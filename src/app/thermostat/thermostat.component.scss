@@ -1,0 +1,15 @@
+mwl-gauge {
+    //stroke: aqua;   
+    display: flex;
+    padding: 10px;
+}
+
+.formFlex{
+    margin: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: flex-start;
+}
