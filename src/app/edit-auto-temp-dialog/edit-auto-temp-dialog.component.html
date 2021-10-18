@@ -1,0 +1,29 @@
+<div style="overflow-y: scroll; max-height: 80vh; margin-bottom: 8px;">
+    <div *ngFor="let AutoTempConfig of AutoTempConfigArray" style="margin-bottom: 8px;">
+        <h3>{{AutoTempConfig.id}}</h3>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="AutoTempConfig.name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Time</mat-label>
+            <input matInput [(ngModel)]="AutoTempConfig.time" type="time">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Temperatur</mat-label>
+            <input matInput [(ngModel)]="AutoTempConfig.targetTemp" type="number">
+        </mat-form-field>
+        <div gdColumns="repeat(auto-fill, minmax(100px, 1fr))">
+            <mat-checkbox *ngFor="let i of arrayItterator(AutoTempConfig.days)" [(ngModel)]="AutoTempConfig.days[i]" >
+                {{dayNames[i]}}
+            </mat-checkbox>
+        </div>
+
+        <br>
+    </div>
+</div>
+
+
+<button mat-raised-button (click)="save()">
+    Save
+</button>

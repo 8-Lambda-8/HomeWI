@@ -10,16 +10,21 @@ import { LightsComponent } from './lights/lights.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GaugeModule } from 'angular-gauge';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
 import { IMqttServiceOptions, MqttModule } from "ngx-mqtt";
 import { environment as env } from '../environments/environment';
 import { ThermostatComponent } from './thermostat/thermostat.component';
+import { EditAutoTempDialogComponent } from './edit-auto-temp-dialog/edit-auto-temp-dialog.component';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: true,
@@ -35,7 +40,8 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   declarations: [
     AppComponent,
     LightsComponent,
-    ThermostatComponent
+    ThermostatComponent,
+    EditAutoTempDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,11 +50,15 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     FormsModule,
     MatButtonModule,
     MatTabsModule,
+    MatFormFieldModule,
     MatSliderModule,
     MatInputModule,
     FlexLayoutModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     GaugeModule.forRoot(),
+    MatIconModule,
+    MatDialogModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

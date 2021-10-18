@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MqttService } from "ngx-mqtt";
+import { MatDialog } from '@angular/material/dialog';
+import { EditAutoTempDialogComponent } from '../edit-auto-temp-dialog/edit-auto-temp-dialog.component';
 
 @Component({
   selector: 'app-thermostat',
@@ -80,5 +82,12 @@ export class ThermostatComponent implements OnInit {
     console.log(this.H);
     this.mqttService.publish(this.tempTopic+"targetTemp",""+this.targetTemp,{ retain: true, }).subscribe();
   }
+  
+  openDialog(){
 
+    const dialogRef = this.dialog.open(EditAutoTempDialogComponent, {
+      width: '80%',
+      data: {mqttService: this.mqttService}
+    });
+  }
 }
