@@ -39,7 +39,7 @@ export class ThermostatComponent implements OnInit {
       //console.log(msg);
 
       let field = msg.topic.replace(this.tempTopic, "");
-      console.log(msg.topic, " ", msg.payload.toString());
+      //console.log(msg.topic, " ", msg.payload.toString());
       switch (field) {
         case "sensorTemp":
           this.sensorTemp = +msg.payload.toString();
