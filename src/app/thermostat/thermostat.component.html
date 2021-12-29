@@ -1,12 +1,5 @@
 <div style="height: 30%; display: flex;">
-    <div gdColumns="repeat(auto-fill, minmax(150px, 50%))" style="width:60%; padding: 0%;" class="fullHeight">
-        <mwl-gauge class="tempGauge" #tempGauge [min]="10" [max]="30" [dialStartAngle]="150" [dialEndAngle]="30"
-            [value]="sensorTemp" [animated]="true" [animationDuration]="1" [label]="floatValue">
-        </mwl-gauge>
-        <mwl-gauge class="humGauge" #humGauge [min]="0" [max]="100" [dialStartAngle]="150" [dialEndAngle]="30"
-            [value]="sensorHum" [animated]="true" [animationDuration]="1" [label]="percentageValue">
-        </mwl-gauge>
-    </div>
+    <iframe width="60%" height="100%" frameborder="0" src="https://homewi.lambda8.at/grafana/d-solo/DhONJMiRz/thermostat?orgId=1&kiosk&refresh=5s&from=now-15s&to=now"></iframe>
     <div class="formFlex" style="width:40%">
         <mat-form-field style="width:40%">
             <mat-label>Soll Temperatur</mat-label>

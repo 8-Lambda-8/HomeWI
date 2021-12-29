@@ -14,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { GaugeModule } from 'angular-gauge';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -55,7 +54,6 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatInputModule,
     FlexLayoutModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-    GaugeModule.forRoot(),
     MatIconModule,
     MatDialogModule,
     MatCheckboxModule,
