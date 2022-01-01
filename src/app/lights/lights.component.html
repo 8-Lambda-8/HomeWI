@@ -1,7 +1,6 @@
 <div #grid gdColumns="repeat(auto-fill, minmax(300px, 2fr))" class="fullWidth btnGrid">
-    <button *ngFor="let lightButton of lightButtons" mat-raised-button 
-        #ref
-        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state}"
+    <button *ngFor="let lightButton of lightButtons" mat-raised-button #ref
+        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state, 'offline':lightButton.offline}"
         (click)="sendMessage(lightButton.id,lightButton.state)">
         <div class="fullWidth" [ngStyle]="{'font-size.px': ref._elementRef.nativeElement.offsetWidth*.15}">
             {{lightButton.name}}</div>

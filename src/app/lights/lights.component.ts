@@ -7,6 +7,9 @@ interface lightButton {
   id: string;
   name: string;
   state: boolean;
+  offline: boolean;
+  ip: String;
+  version: String;
 }
 
 @Component({
@@ -26,28 +29,41 @@ export class LightsComponent implements OnInit {
   ) {  }
 
   lightButtons: lightButton[] = [
-    { id: "0/0", name: "WZ Wand", state: false },
-    { id: "0/1", name: "WZ Decke", state: false },
-    { id: "3/0", name: "Küche Theke", state: false },
-    { id: "3/1", name: "Küche Tisch", state: false },
-    { id: "1/0", name: "Büro Dose", state: false },
-    { id: "1/1", name: "Büro Licht", state: false },
-    { id: "2/0", name: "Terrasse", state: false }
+    { id: "0/0", name: "WZ Wand", state: false, offline: false, ip: "", version: "" },
+    { id: "0/1", name: "WZ Decke", state: false, offline: false, ip: "", version: "" },
+    { id: "3/0", name: "Küche Theke", state: false, offline: false, ip: "", version: "" },
+    { id: "3/1", name: "Küche Tisch", state: false, offline: false, ip: "", version: "" },
+    { id: "1/0", name: "Büro Dose", state: false, offline: false, ip: "", version: "" },
+    { id: "1/1", name: "Büro Licht", state: false, offline: false, ip: "", version: "" },
+    { id: "2/0", name: "Terrasse", state: false, offline: false, ip: "", version: "" }
   ]
 
   ngOnInit(): void {
     this.subscription = this.mqttService.observe(this.lightSwitchTopic + "#").subscribe(msg => {
       //console.log(msg);
 
+      let id = msg.topic.replace(this.lightSwitchTopic, "");
+      let indexes: number[] = (this.lightButtons.map((elm, idx) => elm.id.startsWith(id.substring(0, 1)) ? idx : .5).filter(Number.isInteger));
+
+      //onsole.log(id);
+      //console.log(msg.topic);
+      //console.log(msg.payload.toString());
+      //console.log(indexes);
+
+      indexes.forEach(btnIndex => {
+        if (msg.topic.endsWith("IP"))
+          this.lightButtons[btnIndex].ip = msg.payload.toString();
+        if (msg.topic.endsWith("Version"))
+          this.lightButtons[btnIndex].version = msg.payload.toString();
+        if (msg.topic.endsWith("Status"))
+          this.lightButtons[btnIndex].offline = msg.payload.toString() == "OFFLINE";
+      });
+
+      let btn = this.lightButtons.find(btn => btn.id == id);
+      if (!btn) return;
       if (isNaN(parseInt(msg.topic.slice(-1)))) return;
 
-      let id = msg.topic.replace(this.lightSwitchTopic, "");
-      //console.log(id);
-      //console.log(msg.payload.toString());
-      let btn = this.lightButtons.find(btn=>btn.id==id);
-      //console.log(btn)
-      if (btn)
-        btn.state = (msg.payload.toString()=="1")
+      btn.state = (msg.payload.toString() == "1")
 
     });
     this.onResize();
