@@ -17,6 +17,7 @@ export class EditAutoTempDialogComponent implements OnInit {
     name: String;
     targetTemp: Number;
     time: String;
+    enabled: boolean;
   }] | undefined;
 
   dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

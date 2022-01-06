@@ -17,6 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -57,6 +58,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatIconModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
