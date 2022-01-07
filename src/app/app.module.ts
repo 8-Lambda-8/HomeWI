@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -63,6 +64,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatCheckboxModule,
     MatSlideToggleModule,
     MatListModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

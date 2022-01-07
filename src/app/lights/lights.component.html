@@ -4,5 +4,6 @@
         (click)="sendMessage(lightButton.id,lightButton.state)">
         <div class="fullWidth" [ngStyle]="{'font-size.px': ref._elementRef.nativeElement.offsetWidth*.15}">
             {{lightButton.name}}</div>
+            <mat-icon [style.visibility]="debug?'visible':'hidden'" class="info" #tooltip="matTooltip" matTooltip="{{lightButton.ip}} &#13;&#10; {{lightButton.version}}" matTooltipClass="tooltip" [matTooltipHideDelay]="4000">info_outline</mat-icon>
     </button>
 </div>

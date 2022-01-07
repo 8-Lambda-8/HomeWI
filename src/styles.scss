@@ -46,3 +46,9 @@ $angular-dark-theme: mat-dark-theme(
 .darkMode {
   @include angular-material-color($angular-dark-theme);
 }
+
+.mat-tooltip {
+  font-size: 2vh;
+  text-align: center;
+  white-space: pre-line;
+}

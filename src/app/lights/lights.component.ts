@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IMqttMessage, MqttService } from "ngx-mqtt";
+import { CookieService } from "ngx-cookie-service";
 
 
 interface lightButton {
@@ -24,8 +25,11 @@ export class LightsComponent implements OnInit {
 
   cols = 1;
 
+  debug:boolean = false;
+
   constructor(
     private mqttService: MqttService,
+    private cookieService: CookieService,
   ) {  }
 
   lightButtons: lightButton[] = [
@@ -67,6 +71,7 @@ export class LightsComponent implements OnInit {
 
     });
     this.onResize();
+    this.debug = this.cookieService.get("debug")=="1";
   }
 
   @HostListener('window:resize', ['$event'])
