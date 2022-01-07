@@ -8,14 +8,18 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class SettingsComponent implements OnInit {
 
+  debug: boolean = false;
+
   constructor(
     private cookieService: CookieService,
   ) { }
 
   ngOnInit(): void {
+    this.debug = this.cookieService.get("debug") == "1";
   }
 
   updateDebug() {
+    this.cookieService.set("debug", this.debug ? '1' : '0');
   }
 
 }

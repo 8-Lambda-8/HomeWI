@@ -1,5 +1,7 @@
 <mat-list>
     <mat-list-item>
-        
+        <mat-slide-toggle [(ngModel)]="debug" (change)="updateDebug()">
+            Debug
+        </mat-slide-toggle>
     </mat-list-item>
 </mat-list>
