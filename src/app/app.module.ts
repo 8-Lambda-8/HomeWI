@@ -28,6 +28,7 @@ import { environment as env } from '../environments/environment';
 import { ThermostatComponent } from './thermostat/thermostat.component';
 import { EditAutoTempDialogComponent } from './edit-auto-temp-dialog/edit-auto-temp-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AmbientComponent } from './ambient/ambient.component';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: true,
@@ -46,6 +47,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     ThermostatComponent,
     EditAutoTempDialogComponent,
     SettingsComponent,
+    AmbientComponent,
   ],
   imports: [
     BrowserModule,
