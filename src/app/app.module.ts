@@ -20,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -29,6 +30,7 @@ import { ThermostatComponent } from './thermostat/thermostat.component';
 import { EditAutoTempDialogComponent } from './edit-auto-temp-dialog/edit-auto-temp-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AmbientComponent } from './ambient/ambient.component';
+import { ColorPickerDialogComponent } from './color-picker-dialog/color-picker-dialog.component';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: true,
@@ -48,6 +50,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     EditAutoTempDialogComponent,
     SettingsComponent,
     AmbientComponent,
+    ColorPickerDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatSlideToggleModule,
     MatListModule,
     MatTooltipModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
