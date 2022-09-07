@@ -5,7 +5,7 @@ import { MqttService } from "ngx-mqtt";
 enum ambientTypes {
   schneckenkatze = <any>"schneckenkatze",
   cat = <any>"cat",
-  ambient = <any>"ambient",
+  ambient = <any>"Ambient",
 }
 
 interface ambientLight {
