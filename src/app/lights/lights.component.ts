@@ -39,7 +39,9 @@ export class LightsComponent implements OnInit {
     { id: "3/1", name: "Küche Tisch", state: false, offline: false, ip: "", version: "" },
     { id: "1/0", name: "Büro Dose", state: false, offline: false, ip: "", version: "" },
     { id: "1/1", name: "Büro Licht", state: false, offline: false, ip: "", version: "" },
-    { id: "2/0", name: "Terrasse", state: false, offline: false, ip: "", version: "" }
+    { id: "2/0", name: "Terrasse", state: false, offline: false, ip: "", version: "" },
+    { id: "Z1/0", name: "Lampe R", state: false, offline: false, ip: "", version: "zigbee" },
+    { id: "Z2/0", name: "Kugellampe", state: false, offline: false, ip: "", version: "zigbee" },
   ]
 
   ngOnInit(): void {
