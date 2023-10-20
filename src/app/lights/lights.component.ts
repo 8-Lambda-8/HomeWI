@@ -5,12 +5,21 @@ import { CookieService } from "ngx-cookie-service";
 
 
 interface lightButton {
-  id: string;
   name: string;
+  topic: string;
   state: boolean;
+}
+
+interface lightButtonWiFi extends lightButton {
   offline: boolean;
   ip: String;
   version: String;
+  type: "wifi";
+}
+
+interface lightButtonZigbee extends lightButton {
+  stateSufix: string;
+  type: "zigbee";
 }
 
 @Component({
@@ -20,8 +29,10 @@ interface lightButton {
 })
 export class LightsComponent implements OnInit {
 
-  subscription: Subscription = new Subscription;
+  subscriptionZigbee: Subscription = new Subscription;
+  subscriptionWifi: Subscription = new Subscription;
   lightSwitchTopic: string = "/LightSwitch/"
+  zigbeeTopic: string = "/zigbee2mqtt/"
 
   cols = 1;
 
@@ -32,48 +43,50 @@ export class LightsComponent implements OnInit {
     private cookieService: CookieService,
   ) {  }
 
-  lightButtons: lightButton[] = [
-    { id: "0/0", name: "WZ Wand", state: false, offline: false, ip: "", version: "" },
-    { id: "0/1", name: "WZ Decke", state: false, offline: false, ip: "", version: "" },
-    { id: "3/0", name: "Küche Theke", state: false, offline: false, ip: "", version: "" },
-    { id: "3/1", name: "Küche Tisch", state: false, offline: false, ip: "", version: "" },
-    { id: "1/0", name: "Büro Dose", state: false, offline: false, ip: "", version: "" },
-    { id: "1/1", name: "Büro Licht", state: false, offline: false, ip: "", version: "" },
-    { id: "2/0", name: "Terrasse", state: false, offline: false, ip: "", version: "" },
-    { id: "Z1/0", name: "Lampe R", state: false, offline: false, ip: "", version: "zigbee" },
-    { id: "Z2/0", name: "Kugellampe", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z3/0", name: "Ambient Küche", state: false, offline: false, ip: "", version: "zigbee" },
-    { id: "Z4/0", name: "Bad Lampe", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z5/0", name: "reserve", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z6/0", name: "reserve", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z7/0", name: "reserve", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z8/0", name: "reserve", state: false, offline: false, ip: "", version: "zigbee" },
-    //{ id: "Z9/0", name: "reserve", state: false, offline: false, ip: "", version: "zigbee" },
+  lightButtons: (lightButtonWiFi|lightButtonZigbee)[] = [
+    { topic: "Licht WohnKüche", type:"zigbee", name: "WZ Wand", state: false, stateSufix: "l1" },
+    { topic: "Licht WohnKüche", type:"zigbee", name: "WZ Decke", state: false, stateSufix: "l2" },
+    { topic: "Licht WohnKüche", type:"zigbee", name: "Küche Theke", state: false, stateSufix: "l3" },
+    { topic: "Licht WohnKüche", type:"zigbee", name: "Küche Tisch", state: false, stateSufix: "l4" },
+    { topic: "Licht Büro", type:"zigbee", name: "Büro Dose", state: false, stateSufix: "l1" },
+    { topic: "Licht Büro", type:"zigbee", name: "Büro Licht", state: false, stateSufix: "l2" },
+    { topic: "2/0", type:"wifi", name: "Terrasse", state: false, offline: false, ip: "", version: "" },    
+    { topic: "Steckdose1", type:"zigbee", name: "Lampe R", state: false, stateSufix:"" },
+    { topic: "Steckdose2", type:"zigbee", name: "Kugellampe", state: false, stateSufix:"" },
+    { topic: "Steckdose3", type:"zigbee", name: "Bad Lampe", state: false, stateSufix:"" },
     
   ]
 
   ngOnInit(): void {
-    this.subscription = this.mqttService.observe(this.lightSwitchTopic + "#").subscribe(msg => {
-      //console.log(msg);
+    this.subscriptionZigbee = this.mqttService.observe(this.zigbeeTopic + "#").subscribe(msg => {
+      for (const btn of this.lightButtons) {
+        if(btn.type==="zigbee"&& msg.topic.endsWith(btn.topic)){
+          //console.log(msg.topic, JSON.parse(msg.payload.toString()));
+          const payload = JSON.parse(msg.payload.toString());
+          btn.state = payload[`state${btn.stateSufix?"_":""}${btn.stateSufix}`]==="ON"
+        }
+      }
+
+    });
+
+    this.subscriptionWifi = this.mqttService.observe(this.lightSwitchTopic + "#").subscribe(msg => {
 
       let id = msg.topic.replace(this.lightSwitchTopic, "");
-      let indexes: number[] = (this.lightButtons.map((elm, idx) => elm.id.startsWith(id.substring(0, 1)) ? idx : .5).filter(Number.isInteger));
-
-      //onsole.log(id);
-      //console.log(msg.topic);
-      //console.log(msg.payload.toString());
-      //console.log(indexes);
+      let indexes: number[] = (this.lightButtons.map((elm, idx) => {
+        return elm.type==="wifi" && elm.topic.startsWith(id.substring(0, 1)) ? idx : .5
+      }).filter(Number.isInteger));
 
       indexes.forEach(btnIndex => {
+        const btn = this.lightButtons[btnIndex] as lightButtonWiFi;        
         if (msg.topic.endsWith("IP"))
-          this.lightButtons[btnIndex].ip = msg.payload.toString();
+          btn.ip = msg.payload.toString();
         if (msg.topic.endsWith("Version"))
-          this.lightButtons[btnIndex].version = msg.payload.toString();
+          btn.version = msg.payload.toString();
         if (msg.topic.endsWith("Status"))
-          this.lightButtons[btnIndex].offline = msg.payload.toString() == "OFFLINE";
+          btn.offline = msg.payload.toString() == "OFFLINE";        
       });
 
-      let btn = this.lightButtons.find(btn => btn.id == id);
+      let btn = this.lightButtons.find(btn => btn.topic == id);
       if (!btn) return;
       if (isNaN(parseInt(msg.topic.slice(-1)))) return;
 
@@ -102,15 +115,21 @@ export class LightsComponent implements OnInit {
   }
   
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.subscriptionZigbee) {
+      this.subscriptionZigbee.unsubscribe();
+    }
+    if (this.subscriptionWifi) {
+      this.subscriptionWifi.unsubscribe();
     }
   }
 
-  sendMessage(id: string, state: boolean) {
-    let msg: string = state ? "0" : "1"
-    //console.log(id + " " + state + " " + msg);
-    this.mqttService.publish(this.lightSwitchTopic + id, msg, { retain: true, }).subscribe(/* msg=>console.log(msg) */);
+  sendMessage(button: lightButtonWiFi|lightButtonZigbee) {
+    if(button.type==="wifi"){
+      let msg: string = button.state ? "0" : "1"
+      //console.log(id + " " + state + " " + msg);
+      this.mqttService.publish(this.lightSwitchTopic + button.topic, msg, { retain: true, }).subscribe(/* msg=>console.log(msg) */);
+    }else if(button.type==="zigbee"){
+      this.mqttService.publish(this.zigbeeTopic + button.topic+"/set", `{"state${button.stateSufix?"_":""}${button.stateSufix}":"TOGGLE"}`).subscribe(msg=>console.log(msg));
+    }
   }
-
 }

@@ -1,9 +1,9 @@
 <div #grid gdColumns="repeat(auto-fill, minmax(300px, 2fr))" class="fullWidth btnGrid">
     <button *ngFor="let lightButton of lightButtons" mat-raised-button #ref
-        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state, 'offline':lightButton.offline}"
-        (click)="sendMessage(lightButton.id,lightButton.state)">
+        [ngClass]="{'on': lightButton.state, 'off': !lightButton.state, 'offline':false}"
+        (click)="sendMessage(lightButton)">
         <div class="fullWidth" [ngStyle]="{'font-size.px': ref._elementRef.nativeElement.offsetWidth*.15}">
             {{lightButton.name}}</div>
-            <mat-icon [style.visibility]="debug?'visible':'hidden'" class="info" #tooltip="matTooltip" matTooltip="{{lightButton.ip}} &#13;&#10; {{lightButton.version}}" matTooltipClass="tooltip" [matTooltipHideDelay]="4000">info_outline</mat-icon>
+            <mat-icon [style.visibility]="debug?'visible':'hidden'" class="info" #tooltip="matTooltip" matTooltip="{{lightButton.topic}} &#13;&#10; {{'lightButton.version'}}" matTooltipClass="tooltip" [matTooltipHideDelay]="4000">info_outline</mat-icon>
     </button>
 </div>
