@@ -1,71 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MqttService } from "ngx-mqtt";
+import { MqttService } from 'ngx-mqtt';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAutoTempDialogComponent } from '../edit-auto-temp-dialog/edit-auto-temp-dialog.component';
+
+interface heatingZone {
+  name:
+    | 'Bad'
+    | 'Schlafzimmer'
+    | 'Küche'
+    | 'Gang'
+    | 'Wohnzimmer'
+    | 'Büro'
+    | 'WC';
+  targetTemp: number;
+}
+interface targetTempsType {
+  Bad: number;
+  Schlafzimmer: number;
+  Küche: number;
+  Gang: number;
+  Wohnzimmer: number;
+  Büro: number;
+  WC: number;
+}
 
 @Component({
   selector: 'app-thermostat',
   templateUrl: './thermostat.component.html',
-  styleUrls: ['./thermostat.component.scss']
+  styleUrls: ['./thermostat.component.scss'],
 })
 export class ThermostatComponent implements OnInit {
+  subscription: Subscription = new Subscription();
+  targetTopic: string = '/Thermostat/targetTemps/';
 
-  subscription: Subscription = new Subscription;
-  tempTopic: string = "/Thermostat/Temp/";
+  selectedZone = 'Gang';
+  url =
+    'https://grafana.lambda8.at/d-solo/DhONJMiRz/thermostat?orgId=1&panelId=14&var-Zone=HT-' +
+    this.selectedZone;
 
-  sensorHum: number = 0;
-  sensorTemp: number = 0;
-  targetTemp: number = 0;
-  H: number = 0;
-  heaterState: boolean = false;
+  zones: heatingZone[] = [
+    { name: 'Bad', targetTemp: 0 },
+    { name: 'Schlafzimmer', targetTemp: 0 },
+    { name: 'Küche', targetTemp: 0 },
+    { name: 'Gang', targetTemp: 0 },
+    { name: 'Wohnzimmer', targetTemp: 0 },
+    { name: 'Büro', targetTemp: 0 },
+    { name: 'WC', targetTemp: 0 },
+  ];
+
+  targetTemps = {
+    Bad: 0,
+    Schlafzimmer: 0,
+    Küche: 0,
+    Gang: 0,
+    Wohnzimmer: 0,
+    Büro: 0,
+    WC: 0,
+  };
 
   floatValue: (value: number) => string;
-  percentageValue: (value: number) => string;
 
-  constructor(
-    private mqttService: MqttService,
-    public dialog: MatDialog,
-  ) {
+  constructor(private mqttService: MqttService, public dialog: MatDialog) {
     this.floatValue = function (value: number): string {
       return `${value.toFixed(1)}`;
-    };
-    this.percentageValue = function (value: number): string {
-      return `${value.toFixed(1)} %`;
     };
   }
 
   ngOnInit(): void {
-    this.subscription = this.mqttService.observe(this.tempTopic + "#").subscribe(msg => {
+    this.subscription = this.mqttService
+      .observe(this.targetTopic + '#')
+      .subscribe((msg) => {
+        console.log(msg);
+        const msgObj = JSON.parse(msg.payload.toString()) as targetTempsType;
 
-      //console.log(msg);
-
-      let field = msg.topic.replace(this.tempTopic, "");
-      //console.log(msg.topic, " ", msg.payload.toString());
-      switch (field) {
-        case "sensorTemp":
-          this.sensorTemp = +msg.payload.toString();
-          break;
-        case "targetTemp":
-          this.targetTemp = +msg.payload.toString();
-          break;
-        case "H":
-          this.H = +msg.payload.toString();
-          break;
-        case "heaterState":
-          this.heaterState = +msg.payload.toString()==1;
-          break;
-        case "sensorHum":
-          this.sensorHum = +msg.payload.toString();
-          break;
-
-        default:
-          break;
-      }
-      /* if (isNaN(parseInt(msg.topic.slice(-1)))) return;*/
-
-
-    });
+        for (const obj of this.zones) {
+          obj.targetTemp = msgObj[obj.name];
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -74,20 +86,22 @@ export class ThermostatComponent implements OnInit {
     }
   }
 
-  updateTargetTemp(){
-    console.log(this.targetTemp);
-    this.mqttService.publish(this.tempTopic+"targetTemp",""+this.targetTemp,{ retain: true, }).subscribe();
-  }
-  updateH(){
-    console.log(this.H);
-    this.mqttService.publish(this.tempTopic+"targetTemp",""+this.targetTemp,{ retain: true, }).subscribe();
-  }
-  
-  openDialog(){
+  updateTargetTemp() {
+    for (const zone of this.zones) {
+      this.targetTemps[zone.name] = zone.targetTemp;
+    }
 
+    this.mqttService
+      .publish(this.targetTopic, '' + JSON.stringify(this.targetTemps), {
+        retain: true,
+      })
+      .subscribe();
+  }
+
+  openDialog() {
     const dialogRef = this.dialog.open(EditAutoTempDialogComponent, {
       width: '80%',
-      data: {mqttService: this.mqttService}
+      data: { mqttService: this.mqttService },
     });
   }
 }
