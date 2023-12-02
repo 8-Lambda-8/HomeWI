@@ -32,7 +32,7 @@ interface targetTempsType {
 })
 export class ThermostatComponent implements OnInit {
   subscription: Subscription = new Subscription();
-  targetTopic: string = '/Thermostat/targetTemps/';
+  targetTopic: string = '/Thermostat/targetTemps';
 
   selectedZone = 'Gang';
   url =
@@ -69,9 +69,9 @@ export class ThermostatComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.mqttService
-      .observe(this.targetTopic + '#')
+      .observe(this.targetTopic)
       .subscribe((msg) => {
-        console.log(msg);
+        console.log(msg.topic, '\n', msg.payload.toString());
         const msgObj = JSON.parse(msg.payload.toString()) as targetTempsType;
 
         for (const obj of this.zones) {
@@ -90,7 +90,7 @@ export class ThermostatComponent implements OnInit {
     for (const zone of this.zones) {
       this.targetTemps[zone.name] = zone.targetTemp;
     }
-
+    console.log(this.targetTemps);
     this.mqttService
       .publish(this.targetTopic, '' + JSON.stringify(this.targetTemps), {
         retain: true,
