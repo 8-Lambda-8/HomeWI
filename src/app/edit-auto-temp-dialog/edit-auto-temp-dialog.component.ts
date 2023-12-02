@@ -3,6 +3,16 @@ import { Subscription } from 'rxjs';
 import { MqttService } from "ngx-mqtt";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+interface targetTempsType {
+  Bad: number;
+  Schlafzimmer: number;
+  Küche: number;
+  Gang: number;
+  Wohnzimmer: number;
+  Büro: number;
+  WC: number;
+}
+
 @Component({
   selector: 'app-edit-auto-temp-dialog',
   templateUrl: './edit-auto-temp-dialog.component.html',
@@ -15,12 +25,20 @@ export class EditAutoTempDialogComponent implements OnInit {
     days: [Boolean];
     id: Number;
     name: String;
-    targetTemp: Number;
+    targetTemps: targetTempsType;
     time: String;
     enabled: boolean;
   }] | undefined;
 
   dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  zones = ["Bad", "Schlafzimmer", "Küche", "Gang", "Wohnzimmer", "Büro", "WC"] as 
+  ('Bad'
+  | 'Schlafzimmer'
+  | 'Küche'
+  | 'Gang'
+  | 'Wohnzimmer'
+  | 'Büro'
+  | 'WC')[];
 
   constructor(
     public dialogRef: MatDialogRef<EditAutoTempDialogComponent>,

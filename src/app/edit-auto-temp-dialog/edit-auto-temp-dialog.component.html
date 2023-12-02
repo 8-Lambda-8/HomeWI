@@ -1,4 +1,4 @@
-<div style="overflow-y: scroll; max-height: 80vh; margin-bottom: 8px;">
+<div style="overflow-y: scroll; overflow-x: hidden; max-height: 80vh; margin-bottom: 8px; padding: 1rem;">
     <div *ngFor="let AutoTempConfig of AutoTempConfigArray" class="auto-temp-config-list">
         <h3>
         <mat-slide-toggle [(ngModel)]="AutoTempConfig.enabled">
@@ -13,10 +13,14 @@
             <mat-label>Time</mat-label>
             <input matInput [(ngModel)]="AutoTempConfig.time" type="time" [disabled]="!AutoTempConfig.enabled">
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Temperatur</mat-label>
-            <input matInput [(ngModel)]="AutoTempConfig.targetTemp" type="number" [disabled]="!AutoTempConfig.enabled">
-        </mat-form-field>
+        <div gdColumns="repeat(auto-fill, minmax(100px, 1fr))" style="gap: 1rem;">
+          <div *ngFor="let zone of zones">
+            <mat-form-field style="width: 100%;">
+              <mat-label>{{zone}}</mat-label>
+              <input matInput [(ngModel)]="AutoTempConfig.targetTemps[zone]" type="number" [disabled]="!AutoTempConfig.enabled" style="width: 100%;">
+            </mat-form-field>
+          </div>
+        </div>
         <div gdColumns="repeat(auto-fill, minmax(100px, 1fr))">
             <mat-checkbox *ngFor="let i of arrayItterator(AutoTempConfig.days)" [(ngModel)]="AutoTempConfig.days[i]" [disabled]="!AutoTempConfig.enabled">
                 {{dayNames[i]}}
