@@ -48,8 +48,8 @@ export class LightsComponent implements OnInit {
     { topic: "Licht WohnKüche", type:"zigbee", name: "WZ Decke", state: false, stateSufix: "l2" },
     { topic: "Licht WohnKüche", type:"zigbee", name: "Küche Theke", state: false, stateSufix: "l3" },
     { topic: "Licht WohnKüche", type:"zigbee", name: "Küche Tisch", state: false, stateSufix: "l4" },
-    { topic: "Licht Büro", type:"zigbee", name: "Büro Dose", state: false, stateSufix: "l1" },
-    { topic: "Licht Büro", type:"zigbee", name: "Büro Licht", state: false, stateSufix: "l2" },
+    { topic: "Licht Büro", type:"zigbee", name: "Büro Licht", state: false, stateSufix: "l1" },
+    { topic: "Licht Büro", type:"zigbee", name: "Büro Dose", state: false, stateSufix: "l2" },
     { topic: "2/0", type:"wifi", name: "Terrasse", state: false, offline: false, ip: "", version: "" },    
     { topic: "Steckdose1", type:"zigbee", name: "Lampe R", state: false, stateSufix:"" },
     { topic: "Steckdose2", type:"zigbee", name: "Kugellampe", state: false, stateSufix:"" },
@@ -101,9 +101,9 @@ export class LightsComponent implements OnInit {
 
   onResize() {
 
-    console.log("Width: %d", window.innerWidth);
+    /* console.log("Width: %d", window.innerWidth);
     console.log("Height: %d", window.innerHeight);
-    console.log("DIV: %d", window.innerWidth/window.innerHeight);
+    console.log("DIV: %d", window.innerWidth/window.innerHeight); */
     
     if((window.innerWidth/window.innerHeight)>1){
       this.cols = 2;
