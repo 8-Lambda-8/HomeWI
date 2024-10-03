@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "HomeWI:build"
+            "buildTarget": "HomeWI:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "HomeWI:build:production"
+              "buildTarget": "HomeWI:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "HomeWI:build"
+            "buildTarget": "HomeWI:build"
           }
         },
         "test": {
@@ -128,6 +128,5 @@
         }
       }
     }
-  },
-  "defaultProject": "HomeWI"
+  }
 }
