@@ -53,6 +53,7 @@ export class LightsComponent implements OnInit {
     { topic: "2/0", type:"wifi", name: "Terrasse", state: false, offline: false, ip: "", version: "" },    
     { topic: "Steckdose1", type:"zigbee", name: "Lampe R", state: false, stateSufix:"" },
     { topic: "Steckdose2", type:"zigbee", name: "Kugellampe", state: false, stateSufix:"" },
+    { topic: "Steckdose7", type:"zigbee", name: "Ecklampe", state: false, stateSufix:"" },
     { topic: "Steckdose4", type:"zigbee", name: "Bad Lampe", state: false, stateSufix:"" },
     { topic: "Steckdose3", type:"zigbee", name: "AmbientKüche", state: false, stateSufix:"" },
     { topic: "Steckdose5", type:"zigbee", name: "3D Drucker", state: false, stateSufix:"" },
