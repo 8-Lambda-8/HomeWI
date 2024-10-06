@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --configuration production && scp dist/HomeWI/* PiServer:/var/www/html/HomeWI"
+    "deploy": "ng build --configuration production && scp dist/HomeWI/* Server0:/var/www/html/HomeWI"
   },
   "private": true,
   "dependencies": {
