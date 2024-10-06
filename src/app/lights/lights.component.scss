@@ -1,5 +1,5 @@
 button{
-    width: 90%;
+    width: 400px;
     min-height: 150px;
     height: fit-content;
     margin: 8px;
@@ -7,11 +7,11 @@ button{
 }
 
 .on{
-    background-color: green;
+    background-color: green !important;
 }
 
 .off{
-    background-color: red;
+    background-color: red !important;
 }
 
 .offline{
@@ -19,6 +19,8 @@ button{
 }
 
 .btnGrid {
+    display: flex;
+    flex-flow: row wrap;
     justify-items: center;
     align-items: center;
     align-content: center;
