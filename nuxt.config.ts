@@ -10,12 +10,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     "/": { prerender: true },
-    "/api/*": { cache: { maxAge: 1 * 60 } },
+    "/api/*": {},
   },
-  runtimeConfig: {
-    lstApiUsername: '',
-    lstApiPassword: '',
-  },
+  runtimeConfig: {},
 
   modules: [
     "@nuxt/image",

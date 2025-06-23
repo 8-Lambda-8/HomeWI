@@ -27,6 +27,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-vue": "^10.1.0",
+    "mqtt": "^5.13.1",
     "nuxt": "^3.17.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

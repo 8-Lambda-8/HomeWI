@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  @apply bg-black text-white;
+  @apply bg-neutral-800 text-neutral-300;
   transition:
     color 0.5s,
     background-color 0.5s;
