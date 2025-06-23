@@ -8,6 +8,7 @@
     "preview": "nuxt preview",
     "lint": "eslint . --fix",
     "format": "prettier --write *",
+    "deploy": "scp -r .output/* Server0:/var/www/html/HomeWI",
     "postinstall": "nuxt prepare"
   },
   "private": true,
